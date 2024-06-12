@@ -1,5 +1,11 @@
 const recipeButton = document.querySelector('#recipe-button');
 const resultList = document.querySelector('#results');
+const dropdownButton = document.querySelector('.dropdown');
+
+dropdownButton.addEventListener('click', function(event) {
+    event.stopPropagation();
+    dropdownButton.classList.toggle('is-active');
+  });
 
 
 recipeButton.addEventListener('click', function(event) {
@@ -20,15 +26,22 @@ event.preventDefault();
             const instructionsEl = document.createElement('p');
             const cardEl = document.createElement('div');
             const columnEl = document.createElement('div');
+            const videoLinkEl = document.createElement('a');
             
             columnEl.className = 'col-12'
             cardEl.className = 'card mb-3 p-3'
+            videoLinkEl.href = meal.strYoutube;
+            videoLinkEl.textContent = 'Learn to cook side-by-side with video';
+            videoLinkEl.className = 'fa-regular fa-circle-play';
             
             titleEl.textContent = meal.strMeal;
             instructionsEl.textContent = meal.strInstructions;
             
-            cardEl.appendChild(titleEl, instructionsEl);
+            cardEl.appendChild(titleEl);
+            cardEl.appendChild(instructionsEl);
+            cardEl.appendChild(videoLinkEl);
             columnEl.appendChild(cardEl);
+            columnEl.appendChild(instructionsEl);
             resultList.appendChild(columnEl);
         }
         

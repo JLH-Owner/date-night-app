@@ -1,6 +1,10 @@
 const recipeButton = document.querySelector('#recipe-button');
 const resultList = document.querySelector('#results');
 const dropdownButton = document.querySelector('.dropdown');
+const romanceGenre = document.querySelector('#romance');
+const comedyGenre = document.querySelector('#comedy');
+const horrorGenre = document.querySelector('#horror');
+const actionGenre = document.querySelector('#action');
 
 dropdownButton.addEventListener('click', function(event) {
     event.stopPropagation();
@@ -50,3 +54,19 @@ event.preventDefault();
         console.log(err);
     })
 })
+
+    fetch('http://www.omdbapi.com/?apikey=a041a84e&s=horror&type=movie')
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                return response.json();
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
+

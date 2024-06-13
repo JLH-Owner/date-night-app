@@ -1,16 +1,6 @@
 const recipeButton = document.querySelector('#recipe-button');
 const resultList = document.querySelector('#results');
-const dropdownButton = document.querySelector('.dropdown');
-const romanceGenre = document.querySelector('#romance');
-const comedyGenre = document.querySelector('#comedy');
-const horrorGenre = document.querySelector('#horror');
-const actionGenre = document.querySelector('#action');
-
-dropdownButton.addEventListener('click', function(event) {
-    event.stopPropagation();
-    dropdownButton.classList.toggle('is-active');
-  });
-
+const genreInput = document.querySelector('#genre');
 
 recipeButton.addEventListener('click', function(event) {
 event.preventDefault();
@@ -55,18 +45,23 @@ event.preventDefault();
     })
 })
 
-    fetch('http://www.omdbapi.com/?apikey=a041a84e&s=horror&type=movie')
-        .then(function (response) {
-            if (response.ok) {
-                console.log(response);
-                return response.json();
-            }
-        })
-        .then(function (data) {
-            console.log(data);
-            
-        })
-        .catch(function (err) {
-            console.log(err);
-        })
+genreInput.addEventListener('change', function (event) {
+    event.preventDefault();
 
+    fetch('http://www.omdbapi.com/?apikey=a041a84e&s=' + event.target.value + '&type=movie')
+    .then(function (response) {
+        if (response.ok) {
+            console.log(response);
+            return response.json();
+        }
+    })
+    .then(function (data) {
+        console.log(data);
+        
+    })
+    .catch(function (err) {
+        console.log(err);
+    })
+})
+    
+    

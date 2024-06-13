@@ -12,25 +12,16 @@
 <body class="has-text-centered is-family-monospace">
   <h1 class="is-size-2 has-text-black">Dinner and a Movie</h1>
   <main>
-    <div class="dropdown">
-      <div class="dropdown-trigger">
-        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-          <span>Movie Genres</span>
-          <span class="icon is-small">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu3" role="menu">
-        <div class="dropdown-content">
-          <a href="#" class="dropdown-item" id="romance">Romance</a>
-          <a href="#" class="dropdown-item" id="comedy">Comedy</a>
-          <a href="#" class="dropdown-item" id="horror">Horror</a>
-          <a href="#" class="dropdown-item" id="action">Action</a>
-        </div>
-      </div>
+    <div class="select is-large is-family-monospace">
+      <select id="genre" name="genre" role="menu">
+        <option value="" selected disabled>Movie Genre</option>
+        <option value="romance">Romance</option>
+        <option value="comedy">Comedy</option>
+        <option value="horror">Horror</option>
+        <option value="action">Action</option>
+      </select>
     </div>
-    <button id="recipe-button" class="button is-warning">Get your Recipe</button>
+    <button id="recipe-button" class="button is-warning is-large">Get your Recipe</button>
   </main>
   <div class="row" id="results"></div>
 

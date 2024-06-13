@@ -58,14 +58,18 @@ genreInput.addEventListener('change', function (event) {
     .then(function (data) {
         console.log(data);
 
-        for (let search of data.search) { 
+        for (let Search of data.Search) { 
             const imageEl = document.createElement('img');
             const columnEl = document.createElement('div');
+            
 
-            imageEl.src = search.poster;
+            imageEl.src = Search.Poster;
             columnEl.className = 'col-12';
+           
             
             columnEl.appendChild(imageEl);
+            resultList.appendChild(columnEl);
+           
 
         }})
 

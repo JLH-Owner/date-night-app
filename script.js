@@ -22,8 +22,8 @@ event.preventDefault();
             const columnEl = document.createElement('div');
             const videoLinkEl = document.createElement('a');
             
-            columnEl.className = 'col-12'
-            cardEl.className = 'card mb-3 p-3'
+            columnEl.className = 'col-12';
+            cardEl.className = 'card mb-3 p-3';
             videoLinkEl.href = meal.strYoutube;
             videoLinkEl.textContent = 'Learn to cook side-by-side with video';
             videoLinkEl.className = 'fa-regular fa-circle-play';
@@ -57,11 +57,22 @@ genreInput.addEventListener('change', function (event) {
     })
     .then(function (data) {
         console.log(data);
-        
-    })
+
+        for (let search of data.search) { 
+            const imageEl = document.createElement('img');
+            const columnEl = document.createElement('div');
+
+            imageEl.src = search.poster;
+            columnEl.className = 'col-12';
+            
+            columnEl.appendChild(imageEl);
+
+        }})
+
     .catch(function (err) {
         console.log(err);
     })
 })
+
     
     

@@ -28,18 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
         const $target = $close.closest('.modal');
-    
+
         $close.addEventListener('click', () => {
-          closeModal($target);
+            closeModal($target);
         });
-      });
-    
-      // Add a keyboard event to close all modals
-      document.addEventListener('keydown', (event) => {
-        if(event.key === "Escape") {
-          closeAllModals();
+    });
+
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+        if (event.key === "Escape") {
+            closeAllModals();
         }
-      });
+    });
 });
 recipeButton.addEventListener('click', function (event) {
     event.preventDefault();
@@ -77,12 +77,27 @@ recipeButton.addEventListener('click', function (event) {
                 columnEl.appendChild(instructionsEl);
                 resultList.appendChild(columnEl);
             }
+            localStorage.setItem('recipe', JSON.stringify(recipe));
 
+            // Need to fix local storage function, we want to store previous recipe, need to add a previous recipe button
+            const recipe = JSON.parse(localStorage.getItem('recipe')) || [];
+
+            function storeRecipe() {
+
+                const recipes = {
+                    content: instructionsEl.textContent,
+                };
+
+                recipe.push(recipes);
+
+                localStorage.setItem('recipe', JSON.stringify(recipe));
+            };
+            storeRecipe();
         })
         .catch(function (err) {
             console.log(err);
         })
-})
+});
 
 genreInput.addEventListener('change', function (event) {
     event.preventDefault();

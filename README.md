@@ -8,7 +8,7 @@ We created this app for couples that are looking for a fun and new date night id
 
 The page has a recipe button that randomly generates a recipe as well as a link to the respective video. There is also a dropdown menu of clickable movie genres that when selected will display movie posters of that genre.
 
-![date-night-app-screenshot](./images/Dinner-and-a-Movie%20screenshot.png)
+![date-night-app-screenshot](./images/Dinner-and-a-Movie%20redone.png)
 ![date-night-app-recipe](./images/Dinner-and-a-Movie%20with%20recipe%20button.png)
 ![date-night-app-posters](./images/Dinner-and-a-Movie%20with%20movie%20posters.png)
 

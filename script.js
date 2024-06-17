@@ -1,6 +1,74 @@
 const recipeButton = document.querySelector('#recipe-button');
 const resultList = document.querySelector('#results');
 const genreInput = document.querySelector('#genre');
+const buttonsWell = document.querySelector('#buttons-well');
+
+function renderDetail(data) {
+    console.log(data);
+
+    for (let meal of data.meals) {
+        const meals = JSON.parse(localStorage.getItem('meals')) || [];
+
+        const titleEl = document.createElement('h3');
+        const instructionsEl = document.createElement('p');
+        const cardEl = document.createElement('div');
+        const columnEl = document.createElement('div');
+        const videoLinkEl = document.createElement('a');
+
+        columnEl.className = 'col-12';
+        cardEl.className = 'card mb-3 p-3';
+        videoLinkEl.href = meal.strYoutube;
+        videoLinkEl.textContent = 'Learn to cook side-by-side with video';
+        videoLinkEl.className = 'fa-regular fa-circle-play';
+
+        titleEl.textContent = meal.strMeal;
+        instructionsEl.textContent = meal.strInstructions;
+
+        cardEl.appendChild(titleEl);
+        cardEl.appendChild(instructionsEl);
+        cardEl.appendChild(videoLinkEl);
+        columnEl.appendChild(cardEl);
+        columnEl.appendChild(instructionsEl);
+        resultList.appendChild(columnEl);
+
+        if (!meals.find((item) =>  item.id === meal.idMeal )) {
+            meals.push({ id: meal.idMeal, title: meal.strMeal });
+            localStorage.setItem('meals', JSON.stringify(meals));
+            renderMeals();
+        }
+    }
+
+    // Need to fix local storage function, we want to store previous recipe, need to add a previous recipe button
+}
+
+function renderMeals() {
+    const meals = JSON.parse(localStorage.getItem('meals')) || [];
+
+    buttonsWell.innerHTML = null;
+
+    for (let meal of meals) {
+        const buttonEl = document.createElement('button');
+        buttonEl.textContent = meal.title;
+        buttonEl.dataset.id = meal.id;
+        buttonEl.classList.add('button');
+        buttonsWell.appendChild(buttonEl);
+    }
+}
+
+document.addEventListener('click', function (event) {
+    if (event.target.matches('button[data-id]')) {
+        console.log(event.target.dataset.id);
+
+        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${event.target.dataset.id}`)
+            .then(function (response) {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                }
+            })
+            .then(renderDetail);
+    }
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     // Functions to open and close a modal
@@ -51,52 +119,8 @@ recipeButton.addEventListener('click', function (event) {
                 return response.json();
             }
         })
-        .then(function (data) {
-            console.log(data);
-
-            for (let meal of data.meals) {
-                const titleEl = document.createElement('h3');
-                const instructionsEl = document.createElement('p');
-                const cardEl = document.createElement('div');
-                const columnEl = document.createElement('div');
-                const videoLinkEl = document.createElement('a');
-
-                columnEl.className = 'col-12';
-                cardEl.className = 'card mb-3 p-3';
-                videoLinkEl.href = meal.strYoutube;
-                videoLinkEl.textContent = 'Learn to cook side-by-side with video';
-                videoLinkEl.className = 'fa-regular fa-circle-play';
-
-                titleEl.textContent = meal.strMeal;
-                instructionsEl.textContent = meal.strInstructions;
-
-                cardEl.appendChild(titleEl);
-                cardEl.appendChild(instructionsEl);
-                cardEl.appendChild(videoLinkEl);
-                columnEl.appendChild(cardEl);
-                columnEl.appendChild(instructionsEl);
-                resultList.appendChild(columnEl);
-            }
-            localStorage.setItem('recipe', JSON.stringify(recipe));
-
-            // Need to fix local storage function, we want to store previous recipe, need to add a previous recipe button
-            const recipe = JSON.parse(localStorage.getItem('recipe')) || [];
-
-            function storeRecipe() {
-
-                const recipes = {
-                    content: instructionsEl.textContent,
-                };
-
-                recipe.push(recipes);
-
-                localStorage.setItem('recipe', JSON.stringify(recipe));
-            };
-            storeRecipe();
-        })
-        .catch(function (err) {
-            console.log(err);
-        })
+        .then(renderDetail)
+        .catch((err) => console.log(err));
 });
 
 genreInput.addEventListener('change', function (event) {
@@ -133,4 +157,4 @@ genreInput.addEventListener('change', function (event) {
         })
 })
 
-
+renderMeals();
